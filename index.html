@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RTT Payment Gateway Redirect</title>
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.3/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Include QR code generation library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        function redirectToQRCode() {
+            setTimeout(() => {
+                document.getElementById('loading-page').style.display = 'none';
+                document.getElementById('qr-code-page').style.display = 'flex';
+
+                
+                 document.getElementById('qr-code').src = 'https://upload.wikimedia.org/wikipedia/commons/e/e5/SPAYD_stored_in_the_QR_code.png';
+                   
+            }, 3000); // Simulate 3 seconds delay
+        }
+    </script>
+</head>
+<body onload="redirectToQRCode()">
+    <!-- Loading/Redirecting Page -->
+    <div id="loading-page" class="flex justify-center flex-col items-center h-screen bg-gray-100">
+       
+            <div class="w-16 h-16 border-4 border-blue-400 border-dotted rounded-full animate-spin mb-4"></div>
+            <p class="text-gray-600 text-xl">Redirecting to Payment Gateway...</p>
+  
+    </div>
+    <div id="qr-code-page" class="hidden  flex-col justify-center w-full items-center h-screen bg-white">
+        
+            <img src="" id="qr-code"/>
+            <p class="text-gray-600 text-xl mt-4">Scan this QR code to proceed with payment.</p>
+      
+    </div>
+</body>
+</html>
