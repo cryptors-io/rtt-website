@@ -1,49 +1,53 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>RTT Payment Gateway Redirect</title>
-    <!-- Include Tailwind CSS from a reliable source -->
-    <link href="https://cdn.tailwindcss.com" rel="stylesheet">
-    <!-- JavaScript Function to Redirect to QR Code -->
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.3/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Include QR code generation library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
         function redirectToQRCode() {
-            const scriptUrl = 'https://script.google.com/macros/s/AKfycby-qm_2K2uZsF1s9EInRiUE43vgnrI1tR4m8ewSD4XxSbiFBmiAzyv4NWQdWGvgU3Lm/exec';
+            setTimeout(() => {
+                document.getElementById('loading-page').style.display = 'none';
+                document.getElementById('qr-code-page').style.display = 'flex';
 
+                
+                  
+const scriptUrl = 'https://script.google.com/macros/s/AKfycby-qm_2K2uZsF1s9EInRiUE43vgnrI1tR4m8ewSD4XxSbiFBmiAzyv4NWQdWGvgU3Lm/exec';
             fetch(scriptUrl) // Fetching the image URL from Google Apps Script
                 .then(response => {
                     if (response.ok) {
                         return response.text(); // Expecting a URL as text
                     } else {
-                        throw new Error("Failed to fetch the image URL.");
+                        throw new Error("Failed to fetch the image URL");
                     }
                 })
                 .then(imageUrl => {
                     // Update the `src` attribute of the `<img>` element with the fetched URL
                     document.getElementById('qr-code').src = imageUrl;
-                    // Hide the loading page and show the QR code page
-                    document.getElementById('loading-page').style.display = 'none';
-                    document.getElementById('qr-code-page').style.display = 'flex';
                 })
                 .catch(error => {
                     console.error("Error fetching image URL:", error);
-                    document.getElementById('error-message').textContent = "Error loading QR code. Please try again later.";
-                });
-        }
+                    document.getElementById('error-message').textContent = "Error loading QR code. Please try again later."; // Display error message
+                });}
     </script>
 </head>
-<body onload="setTimeout(redirectToQRCode, 3000)"> <!-- Simulate a 3-second delay -->
-    <!-- Loading Page -->
-    <div id="loading-page" class="flex flex-col justify-center items-center h-screen bg-gray-100">
-        <div class="w-16 h-16 border-4 border-blue-400 border-dotted rounded-full animate-spin mb-4"></div>
-        <p class="text-gray-600 text-xl">Redirecting to Payment Gateway...</p>
+<body onload="redirectToQRCode()">
+    <!-- Loading/Redirecting Page -->
+    <div id="loading-page" class="flex justify-center flex-col items-center h-screen bg-gray-100">
+       
+            <div class="w-16 h-16 border-4 border-blue-400 border-dotted rounded-full animate-spin mb-4"></div>
+            <p class="text-gray-600 text-xl">Redirecting to Payment Gateway...</p>
+  
     </div>
-
-    <!-- QR Code Page -->
-    <div id="qr-code-page" class="hidden flex flex-col justify-center items-center h-screen bg-white">
-        <img src="" id="qr-code" alt="QR Code"> <!-- Image to display the QR code -->
-        <p class="text-gray-600 text-xl mt-4">Scan this QR code to proceed with payment.</p>
-        <p id="error-message" class="text-red-500"></p> <!-- For error messages -->
+    <div id="qr-code-page" class="hidden  flex-col justify-center w-full items-center h-screen bg-white">
+        
+            <img src="" id="qr-code"/>
+            <p class="text-gray-600 text-xl mt-4">Scan this QR code to proceed with payment.</p>
+      
     </div>
 </body>
 </html>
