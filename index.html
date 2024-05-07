@@ -9,30 +9,32 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        function redirectToQRCode() {
+     function redirectToQRCode() {
+            // Set a timeout to switch to the QR code view and fetch the image URL from Google Apps Script
             setTimeout(() => {
                 document.getElementById('loading-page').style.display = 'none';
                 document.getElementById('qr-code-page').style.display = 'flex';
 
+                const scriptUrl = 'https://script.google.com/macros/s/AKfycbzGYr4FPiDWNcnGZVZz7_PY1sy6_JdxvQf9Clrzy6uaAUqcT_OIj5QG-Sf96A0rMWvY/exec';
                 
-                  
-const scriptUrl = 'https://script.google.com/macros/s/AKfycby-qm_2K2uZsF1s9EInRiUE43vgnrI1tR4m8ewSD4XxSbiFBmiAzyv4NWQdWGvgU3Lm/exec';
-            fetch(scriptUrl) // Fetching the image URL from Google Apps Script
-                .then(response => {
-                    if (response.ok) {
-                        return response.text(); // Expecting a URL as text
-                    } else {
-                        throw new Error("Failed to fetch the image URL");
-                    }
-                })
-                .then(imageUrl => {
-                    // Update the `src` attribute of the `<img>` element with the fetched URL
-                    document.getElementById('qr-code').src = imageUrl;
-                })
-                .catch(error => {
-                    console.error("Error fetching image URL:", error);
-                    document.getElementById('error-message').textContent = "Error loading QR code. Please try again later."; // Display error message
-                });}
+                fetch(scriptUrl) // Fetching the image URL from Google Apps Script
+                    .then(response => {
+                        if (response.ok) {
+                            return response.text(); // Expecting a URL as text
+                        } else {
+                            throw new Error("Failed to fetch the image URL");
+                        }
+                    })
+                    .then(imageUrl => {
+                        // Update the `src` attribute of the `<img>` element with the fetched URL
+                        document.getElementById('qr-code').src = imageUrl;
+                    })
+                    .catch(error => {
+                        console.error("Error fetching image URL:", error);
+                        document.getElementById('error-message').textContent = "Error loading QR code. Please try again later."; // Display error message
+                    });
+            }, 3000); // 3000 milliseconds (3 seconds) delay
+        }
     </script>
 </head>
 <body onload="redirectToQRCode()">
